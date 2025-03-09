@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package server;
+
+option go_package = "treeship/api/gen/v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+service AgentService {
+  rpc MessageRoute(stream MessageRequest) returns (stream MessageResponse);
+}
+
+message MessageRequest {
+  string agent_id = 1;
+  string name = 2;
+  string  namespace = 3;
+  string message = 4;
+  string type = 5;
+  .google.protobuf.Struct responce = 6;
+}
+
+message MessageResponse {
+  string agent_id = 1;
+  string name = 2;
+  string namespace = 3;
+  string message = 4;
+  string type = 5;
+  .google.protobuf.Struct responce = 6;
+}
