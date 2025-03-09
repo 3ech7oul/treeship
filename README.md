@@ -1,5 +1,8 @@
 # Treeship
 
+*NOTE*:
+Project Under Construction. 
+
 Treeship is a Kubernetes agent and server system that performs actions on behalf of users in Kubernetes environments. It uses gRPC for efficient communication between server components and distributed agents.
 
 ## Overview
@@ -10,8 +13,9 @@ Agents: Distributed components that execute operations within Kubernetes cluster
 
 ## Features
 - Secure delegation of Kubernetes operations
-- Efficient communication using gRPC bidirectional streaming
+- Communication using gRPC bidirectional streaming
 - Scalable architecture supporting multiple agents and clusters
+- TODO: Add impersonate the client for K8s.
 - TODO: Role-based access control for operation permissions
 
 ## Architecture
