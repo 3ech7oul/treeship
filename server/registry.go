@@ -74,35 +74,8 @@ func (r *AgentRegistry) MessageRoute(stream pb.AgentService_MessageRouteServer) 
 	r.AddAgentStream(agentID, &stream)
 	defer r.RemoveAgentStream(agentID)
 
-	for {
-		select {
-		case <-ctx.Done():
-			return status.Error(codes.Canceled, "client disconnected")
-
-			//default:
-			/* req, err := stream.Recv()
-			if err != nil {
-				if err == io.EOF {
-					r.logger.Info("agent stream ended normally",
-						zap.String("agent_id", agentID))
-					return nil
-				}
-
-				// Check for context cancellation in receive errors
-				if status.Code(err) == codes.Canceled {
-					r.logger.Info("agent disconnected during receive",
-						zap.String("agent_id", agentID))
-					return status.Error(codes.Canceled, "client disconnected")
-				}
-
-				r.logger.Error("error receiving from agent",
-					zap.String("agent_id", agentID),
-					zap.Error(err))
-				return status.Errorf(codes.Unknown, "failed to receive: %v", err)
-			} */
-
-		}
-	}
+	<-ctx.Done()
+	return status.Error(codes.Canceled, "client disconnected")
 }
 
 func NewAgentRegistry(logger *zap.Logger) *AgentRegistry {
