@@ -34,7 +34,7 @@ func main() {
 	flag.Parse()
 	r := mux.NewRouter()
 
-	registry := server.NewAgentManager(logger)
+	registry := server.NewAgentRegistry(logger)
 	routes := server.NewRoutes(registry)
 
 	r.HandleFunc("/agents", routes.ListAgents)

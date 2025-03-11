@@ -7,21 +7,17 @@ import (
 )
 
 type Routes struct {
-	manager *AgentManager
+	registry *AgentRegistry
 }
 
 func (ro *Routes) ListAgents(w http.ResponseWriter, r *http.Request) {
-
-	// Set content type header
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
-	w.Write([]byte(fmt.Sprintf("agents connected %d", ro.manager.AgentsConnnected())))
+	w.Write([]byte(fmt.Sprintf("agents connected %d", ro.registry.AgentsConnnected())))
 }
 
 func (ro *Routes) SendMessage(w http.ResponseWriter, r *http.Request) {
-	// Decode the request body
-
 	type Message struct {
 		Message   string `json:"message"`
 		AgentID   string `json:"agent_id"`
@@ -36,7 +32,7 @@ func (ro *Routes) SendMessage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Send the message to the agent
-	res, err := ro.manager.SendMessage(message.AgentID, message.Message)
+	res, err := ro.registry.SendMessage(message.AgentID, message.Message)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -51,8 +47,8 @@ func (ro *Routes) SendMessage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func NewRoutes(manager *AgentManager) *Routes {
+func NewRoutes(registry *AgentRegistry) *Routes {
 	return &Routes{
-		manager: manager,
+		registry: registry,
 	}
 }
